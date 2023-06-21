@@ -2,46 +2,8 @@ version: "3.9"
 
 services: 
 
-  db:
-    image: mysql:8.0.33
-    platform: linux/x86_64
-    restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password
-    volumes:
-      - ./app/db_data:/var/lib/mysql
-    environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: dbtest
-        # MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: root
-    ports:
-      - 127.0.0.1:3306:3306
-    networks:
-      - tf_network
-
   php:
-    # image: ulisescarreon/php8.0.3-apache-ready
-    image: php:zts-alpine3.18
-    volumes: 
-      - ./app:/var/www/html
-      - /var/log/apache2/app:/var/log/apache2/
+    image: ghcr.io/nbl-altair/mepapp-docker/mepapp:latest
+    restart: unless-stopped
     ports:
       - 127.0.0.1:8100:80
-    networks:
-      - tf_network
-
-  # mailhog:
-  #   image: mailhog/mailhog
-  #   logging:
-  #     driver: 'none'  # disable saving logs
-  #   ports:
-  #     - 1025:1025 # smtp server
-  #     - 8025:8025 # web ui
-  #   networks:
-  #     - tf_network
-
-networks:
-  tf_network:
-
-
-
